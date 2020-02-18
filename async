@@ -1,0 +1,97 @@
+ // const asyncReadFile = async () => {
+    //     const f1 = await readFile('/etc/fstab');
+    //     const f2 = await readFile('/etc/shells');
+    //     console.log(f1.toString());
+    //     console.log(f2.toString());
+    // };
+    // asyncReadFile();
+    
+    // async function getStockPriceByName(name) {
+    //     const symbol = await getStockSymbol(name);
+    //     const stockPrice = await getStockPrice(symbol);
+    //     return stockPrice;
+    // }
+
+    // getStockPriceByName('goog').then(function (result) {
+    //     console.log(result);
+    // });
+    // function timeout(ms) {
+    //     return new Promise((resolve) => {
+    //     setTimeout(resolve, ms);
+    //     });
+    // }
+
+    // async function asyncPrint(value, ms) {
+    //     await timeout(ms);
+    //     console.log(value);
+    // }
+
+    // asyncPrint('hello world', 50); //50毫秒后输出 'hello world'
+    // async function f() {
+    //     return 'hello world';
+    // }
+    // f().then(v => console.log(v))// "hello world"
+
+    // async function f() {
+    //     throw new Error('出错了');
+    // }
+
+    // f().then(
+    //     v => console.log(v),
+    //     e => console.log(e)
+    // )// Error: 出错了
+
+    // async function getTitle(url) {
+    //     let response = await fetch(url);
+    //     let html = await response.text();
+    //     return html.match(/<title>([\s\S]+)<\/title>/i)[1];
+    // }
+    // getTitle('https://tc39.github.io/ecma262/').then(console.log)
+    // "ECMAScript 2017 Language Specification"
+
+    // async function f() {
+    // // 等同于
+    // // return 123;
+    //     return await 123;
+    // }
+    // f().then(v => console.log(v))
+    // // 123
+
+    // function sleep(interval) {
+    //     return new Promise(resolve => {
+    //         setTimeout(resolve, interval);
+    //     })
+    // }
+
+    // // 用法
+    // async function one2FiveInAsync() {
+    //     for(let i = 1; i <= 5; i++) {
+    //         console.log(i);
+    //         await sleep(1000);
+    //     }
+    // }
+    // one2FiveInAsync(); // 1 2 3 4 5
+
+    // async function f() {
+    //     await Promise.reject('出错了');
+    // }
+
+    // f()
+    //   .then(v => console.log(v))
+    //   .catch(e => console.log(e)) // 出错了
+
+    // async function logInOrder(urls) {
+    //     // 并发读取远程URL
+    //     const textPromises = urls.map(async url => {
+    //         const response = await fetch(url);
+    //         return response.text();
+    //     });
+
+    //     // 按次序输出
+    //     for (const textPromise of textPromises) {
+    //         console.log(await textPromise);
+    //     }
+    // }
+
+    //const data = await fetch('https://api.example.com');
+    //上面代码中，await命令独立使用，没有放在 async 函数里面，就会报错
