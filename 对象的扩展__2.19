@@ -1,0 +1,153 @@
+//对象的扩展
+    //属性的简洁表示法
+        //ES6 允许在大括号里面，直接写入变量和函数，作为对象的属性和方法。这样的书写更加简洁。
+    //     const foo = 'bar';
+    //     const baz = {foo};
+    //     console.log(baz) // {foo: "bar"}
+    //     // 等同于
+    //    // const baz = {foo: foo};
+
+        // function f(x, y) {
+        //     return {x, y};
+        // }
+        // // 等同于
+        // function f(x, y) {
+        //     return {x: x, y: y};
+        // }
+        // f(1, 2) // Object {x: 1, y: 2}
+        
+        //属性能简写，方法也可以
+        // const o = {
+        //     method() {
+        //         return "Hello!";
+        //     }
+        // };
+        // // 等同于
+        // const o = {
+        //     method: function() {
+        //         return "Hello!";
+        //     }
+        // };
+
+        // const Person = {
+        //     name: '张三',
+        //     // 等同于hello: function ()...
+        //     hello() { console.log('我的名字是', this.name); }
+        // };
+        // Person.hello() // 我的名字是 张三
+
+        // function getPoint() {
+        //     const x = 1;
+        //     const y = 10;
+        //     return {x, y};
+        // }
+        // getPoint() // {x:1, y:10}
+        
+    //属性名表达式
+        //JavaScript 定义对象的属性，有两种方法。
+
+        // 方法一
+        // obj.foo = true;
+        // // 方法二
+        // obj['a' + 'bc'] = 123;
+
+        //方法一是直接用标识符作为属性名，方法二是用表达式作为属性名，这时要将表达式放在方括号之内。
+
+        // let lastWord = 'last word';
+        // const a = {
+        //     'first word': 'hello',
+        //     [lastWord]: 'world'
+        // }
+        // a['first word'] // "hello"
+        // a[lastWord] // "world"
+        // a['last word'] // "world"
+        
+        //表达式还可以用于定义方法名。
+        // let obj = {
+        //     ['h' + 'ello']() {
+        //         return 'hi';
+        //     }
+        // };
+        // obj.hello() // hi
+
+        //注意，属性名表达式与简洁表示法，不能同时使用，会报错。
+        // 报错
+        // const foo = 'bar';
+        // const bar = 'abc';
+        // const baz = { [foo] };
+
+        // // 正确
+        // const foo = 'bar';
+        // const baz = { [foo]: 'abc'};
+
+    //对象的扩展运算符
+        //解构赋值
+            // let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
+            // x // 1
+            // y // 2
+            // z // { a: 3, b: 4 }
+            
+            //解构赋值要求等号右边是一个对象，所以如果等号右边是undefined或null，就会报错，因为它们无法转为对象。
+            // let { ...z } = null; // 运行时错误
+            // let { ...z } = undefined; // 运行时错误
+
+            //解构赋值必须是最后一个参数，否则会报错。
+            // let { ...x, y, z } = someObject; // 句法错误
+            // let { x, ...y, ...z } = someObject; // 句法错误
+
+            //注意，解构赋值的拷贝是浅拷贝，即如果一个键的值是复合类型的值（数组、对象、函数）、那么解构赋值拷贝的是这个值的引用，而不是这个值的副本。
+            // let obj = { a: { b: 1 } };
+            // let { ...x } = obj;
+            // obj.a.b = 2;
+            // x.a.b // 2
+
+            //扩展运算符的解构赋值，不能复制继承自原型对象的属性。
+            // let o1 = { a: 1 };
+            // let o2 = { b: 2 };
+            // o2.__proto__ = o1;
+            // let { ...o3 } = o2;
+            // console.log(o3); // { b: 2 }
+            // console.log(o3.a); // undefined
+        //扩展运算符
+            //对象的扩展运算符（...）用于取出参数对象的所有可遍历属性，拷贝到当前对象之中。
+            // let z = { a: 3, b: 4 };
+            // let n = { ...z };
+            // console.log(n) // { a: 3, b: 4 }
+
+            //由于数组是特殊的对象，所以对象的扩展运算符也可以用于数组
+            // let foo = { ...['a', 'b', 'c'] };
+            // console.log(foo); // {0: "a", 1: "b", 2: "c"}
+
+            //如果扩展运算符后面是一个空对象，则没有任何效果。
+            // {...{}, a: 1} // { a: 1 }
+
+            //如果扩展运算符后面不是对象，则会自动将其转为对象。
+            // 等同于 {...Object(1)}
+            //{...1} // {}
+
+            //扩展运算符后面是字符串，它会自动转成一个类似数组的对象，因此返回的不是空对象。
+            //console.log( {...'hello'});
+            // {0: "h", 1: "e", 2: "l", 3: "l", 4: "o"}
+
+            //对象的扩展运算符等同于使用Object.assign()方法。
+            // let aClone = { ...a };
+            // 等同于
+            // let aClone = Object.assign({}, a);
+
+            //扩展运算符可以用于合并两个对象。
+            // let ab = { ...a, ...b };
+            // // 等同于
+            // let ab = Object.assign({}, a, b);
+
+            //如果把自定义属性放在扩展运算符前面，就变成了设置新对象的默认属性值。
+            // let aWithDefaults = { x: 1, y: 2, ...a };
+            // // 等同于
+            // let aWithDefaults = Object.assign({}, { x: 1, y: 2 }, a);
+            // // 等同于
+            // let aWithDefaults = Object.assign({ x: 1, y: 2 }, a);\
+
+            //与数组的扩展运算符一样，对象的扩展运算符后面可以跟表达式。
+            // const obj = {
+            //     ...(x > 1 ? {a: 1} : {}),
+            //     b: 2,
+            // };
